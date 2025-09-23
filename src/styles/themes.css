@@ -1,0 +1,11 @@
+/* Client themes via CSS custom properties on <html data-client="..."> */
+
+:root[data-client="mars"] {
+  --primary: 220 38 38;            /* red */
+  --primary-foreground: 255 255 255;
+}
+
+:root[data-client="santender"] {
+  --primary: 37 99 235;            /* blue */
+  --primary-foreground: 255 255 255;
+}
