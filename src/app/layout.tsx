@@ -1,20 +1,24 @@
-import "./globals.css";
-import "@/styles/themes.css";
-import { ReactNode } from "react";
+"use client";
 
-export const metadata = {
-  title: "Multi-Client App",
-  description: "Mars & Santender themed routing",
-};
+import { oktaAuth } from "@/lib/auth/oktaConfig";
+import { Security } from "@okta/okta-react";
 
-import AuthProvider from "@/providers/SessionProvider";
-
+import { useRouter } from "next/navigation";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
+  const restoreOriginalUri = async (_oktaAuth: any, originalUri?: string) => {
+    // Redirect user back to the page they were trying to access, or home
+    router.replace(originalUri || "/choose-client");
+  };
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen" suppressHydrationWarning>
-        <AuthProvider>{children}</AuthProvider>
+    <html lang="en">
+      <body>
+        <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+          {children}
+        </Security>
       </body>
     </html>
   );

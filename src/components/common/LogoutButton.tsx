@@ -1,22 +1,16 @@
 "use client";
 
-import * as React from "react";
-import { signOut } from "next-auth/react";
+import { useOktaAuth } from "@okta/okta-react";
 
-export default function LogoutButton({
-  asChild,
-  children,
-}: {
-  asChild?: boolean;
-  children?: React.ReactNode;
-}) {
-  const onClick = async () => {
-    await signOut({ callbackUrl: "/login" });
-  };
+export default function LogoutButton() {
+  const { oktaAuth } = useOktaAuth();
 
-  if (asChild && React.isValidElement(children)) {
-    return React.cloneElement(children as React.ReactElement<any>, { onClick });
-  }
-
-  return <button onClick={onClick}>{children ?? "Logout"}</button>;
+  return (
+    <button
+      onClick={() => oktaAuth.signOut()}
+      className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+    >
+      Logout
+    </button>
+  );
 }
