@@ -7,14 +7,14 @@ export const metadata = {
   description: "Mars & Santender themed routing",
 };
 
-import AuthProvider from "@/providers/SessionProvider";
+import OktaProvider from "@/providers/OktaProvider";
 
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen" suppressHydrationWarning>
-        <AuthProvider>{children}</AuthProvider>
+        <OktaProvider>{children}</OktaProvider>
       </body>
     </html>
   );

@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useOkta } from "@/providers/OktaProvider";
 
 const LABELS: Record<"mars" | "santender", string> = {
   mars: "Mars",
@@ -18,11 +18,11 @@ export default function ChooseClientClient({
   clients: ("mars" | "santender")[];
 }) {
   const router = useRouter();
-  const { update } = useSession();
+  const { chooseClient } = useOkta();
 
   const pick = async (client: "mars" | "santender") => {
-    await update({ client });          // stores chosen client in JWT/session
-    router.replace(`/${client}`);      // go to that client's landing
+    chooseClient(client);
+    router.replace(`/${client}`);
   };
 
   return (

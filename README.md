@@ -5,11 +5,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, configure the required environment variables in a `.env.local` file:
 
 ```bash
-OKTA_CLIENT_ID=your-okta-client-id
-OKTA_CLIENT_SECRET=your-okta-client-secret
-OKTA_ISSUER=https://your-okta-domain.okta.com/oauth2/default
-NEXTAUTH_SECRET=your-random-secret
+NEXT_PUBLIC_OKTA_CLIENT_ID=your-okta-client-id
+NEXT_PUBLIC_OKTA_ISSUER=https://your-okta-domain.okta.com/oauth2/default
 ```
+
+The app uses Okta's Authorization Code + PKCE flow entirely from the browser, so the Okta application should be created as a
+public SPA and the redirect URI `http://localhost:3000/auth/callback` must be allowed.
 
 Then run the development server:
 
