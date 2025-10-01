@@ -2,7 +2,16 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, configure the required environment variables in a `.env.local` file:
+
+```bash
+OKTA_CLIENT_ID=your-okta-client-id
+OKTA_CLIENT_SECRET=your-okta-client-secret
+OKTA_ISSUER=https://your-okta-domain.okta.com/oauth2/default
+NEXTAUTH_SECRET=your-random-secret
+```
+
+Then run the development server:
 
 ```bash
 npm run dev
