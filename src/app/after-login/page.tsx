@@ -1,19 +1,36 @@
-import { redirect } from "next/navigation";
-import { getSession } from "@/lib/auth/session";
+"use client";
 
-export default async function AfterLogin() {
-  const session = await getSession();
-  if (!session) redirect("/login");
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useOkta } from "@/providers/OktaProvider";
 
-  const chosen = session.user.client;
-  const clients = session.user.clients ?? [];
+export default function AfterLogin() {
+  const router = useRouter();
+  const { isAuthenticated, isLoading, user } = useOkta();
 
-  if (!chosen && clients.length > 1) {
-    redirect("/choose-client");
-  }
+  useEffect(() => {
+    if (isLoading) return;
+    if (!isAuthenticated || !user) {
+      router.replace("/login");
+      return;
+    }
 
-  const client = chosen ?? clients[0];
-  if (!client) redirect("/login");
+    const clients = user.clients ?? [];
+    if (!user.client && clients.length > 1) {
+      router.replace("/choose-client");
+      return;
+    }
 
-  redirect(`/${client}`);
+    const destination = user.client ?? clients[0];
+    if (!destination) {
+      router.replace("/login");
+      return;
+    }
+
+    router.replace(`/${destination}`);
+  }, [isAuthenticated, isLoading, router, user]);
+
+  return (
+    <div className="text-sm text-muted-foreground">Preparing your experience…</div>
+  );
 }
